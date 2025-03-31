@@ -6,6 +6,21 @@
     <link rel="stylesheet" href="style.css">
     <title>Login</title>
     <link rel="website icon" href="photo/login.png">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        .message {
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 5px;
+            width: 50%;
+            margin: auto;
+        }
+        .success { background-color: green; color: white; }
+        .error { background-color: red; color: white; }
+    </style>
 </head>
 
 <body class="body_login">
@@ -26,34 +41,95 @@
     }
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $identifiant = $_POST['identifiant'];
-        $pass = $_POST['pass'];
+        if (isset($_POST['register'])) {
+            $identifiant = $_POST['identifiant'];
+            $pass = $_POST['pass'];
+            $email = $_POST['email'];
     
-        if (!empty($identifiant) && !empty($pass)) {
-            // Préparation sécurisée de la requête
-            $stmt = $bdd->prepare("SELECT * FROM utilisateur WHERE identifiant = :identifiant AND Password = :pass");
+            // Vérifier si l'identifiant ou l'email existent déjà
+            $check = $bdd->prepare("SELECT id FROM utilisateur WHERE identifiant = :identifiant OR email = :email");
+            $check->execute(["identifiant" => $identifiant, "email" => $email]);
+    
+            if ($check->rowCount() > 0) {
+                $_SESSION['message'] = "❌ Identifiant ou email déjà utilisé.";
+            } else {
+                // Insertion dans la base de données
+                $_request = $bdd->prepare("INSERT INTO utilisateur(identifiant, email, mot_de_passe) VALUES(:identifiant, :email, :pass)");
+                $success = $_request->execute(
+                    array(
+                        "identifiant" => $identifiant,
+                        "pass" => $pass,
+                        "email" => $email
+                    )
+                );
+                $_SESSION['message'] = $success ? "✅ Inscription réussie !" : "❌ Erreur lors de l'inscription.";
+            }
+            header("Location: ".$_SERVER['PHP_SELF']); // Recharge la page pour afficher le message
+        exit();
+        }elseif (isset($_POST['login'])) {
+            $identifiant = $_POST['identifiant'];
+            $pass = $_POST['pass'];
+        
+            if (!empty($identifiant) && !empty($pass)) {
+                // Préparation sécurisée de la requête
+                $stmt = $bdd->prepare("SELECT * FROM utilisateur WHERE identifiant = :identifiant AND mot_de_passe = :pass");
+                $stmt->bindParam(':identifiant', $identifiant);
+                $stmt->bindParam(':pass', $pass); 
+                $stmt->execute();
+                $user = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+                if ($user) {
+                    // Connexion réussie
+                    $_SESSION['user_id'] = $user['id']; // Ou autre identifiant unique
+                    $_SESSION['identifiant'] = $user['identifiant'];
+        
+                    header("location:new.php");
+                } else {
+                    $_SESSION['message'] ="❌ Information faux.";
+                }
+            } else {
+                $error_msg = "Veuillez remplir tous les champs.";
+            }
+        }elseif (isset($_POST['change_password'])) {
+            $identifiant = $_POST['identifiant'];
+            $current_pass = $_POST['current_pass'];
+            $new_pass = $_POST['new_pass'];
+            $confirm_new_pass = $_POST['confirm_new_pass'];
+    
+            // Vérification si le mot de passe actuel est correct
+            $stmt = $bdd->prepare("SELECT * FROM utilisateur WHERE identifiant = :identifiant AND mot_de_passe = :current_pass");
             $stmt->bindParam(':identifiant', $identifiant);
-            $stmt->bindParam(':pass', $pass); // hasher le mot de passe (ex : avec password_verify)
+            $stmt->bindParam(':current_pass', $current_pass);
             $stmt->execute();
+    
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
     
             if ($user) {
-                // Connexion réussie
-                $_SESSION['user_id'] = $user['id']; // Ou autre identifiant unique
-                $_SESSION['identifiant'] = $user['identifiant'];
+                // Vérifier si les nouveaux mots de passe correspondent
+                if ($new_pass === $confirm_new_pass) {
+                    // Mettre à jour le mot de passe
+                    $update_stmt = $bdd->prepare("UPDATE utilisateur SET mot_de_passe = :new_pass WHERE identifiant = :identifiant");
+                    $update_stmt->bindParam(':new_pass', $new_pass);
+                    $update_stmt->bindParam(':identifiant', $identifiant);
     
-                header("Location: new.php"); // Redirection après connexion
-                exit();
+                    if ($update_stmt->execute()) {
+                        $_SESSION['message'] = "✅ Mot de passe changé avec succès.";
+                    } else {
+                        $_SESSION['message'] = "❌ Une erreur est survenue lors du changement du mot de passe.";
+                    }
+                } else {
+                    $_SESSION['message'] = "❌ Les nouveaux mots de passe ne correspondent pas.";
+                }
             } else {
-                $error_msg = "Identifiant ou mot de passe incorrect.";
+                $_SESSION['message'] = "❌ Mot de passe actuel incorrect.";
             }
-        } else {
-            $error_msg = "Veuillez remplir tous les champs.";
+    
+            header("Location: " . $_SERVER['HTTP_REFERER']); // Redirige vers la page précédente
+            exit();
         }
     }
     ?>
 
-   
         <div class="bienvenue">
             <h1> Bienvenue sur notre simulateur de bourse</h1>
             <p>
@@ -72,27 +148,29 @@
 
         <div class="login" id="loginDiv">
             <h1 class="h1login">Connexion</h1>
+            <?php 
+            if (isset($_SESSION['message'])) {
+                echo "<p style='color: ".(strpos($_SESSION['message'], '✅') !== false ? 'green' : 'red').";'>" . $_SESSION['message'] . "</p>";
+                unset($_SESSION['message']); // Efface le message après l'affichage
+            }
+            ?>
             <form action="" method="Post" class="formlogin">
-
                 <div class="case">
                     <input type="text" required class="inputlog" placeholder="identifiant" name="identifiant" id="identifiant" />
 
                     <input type="password" required class="inputlog" placeholder="mot de passe" name="pass" id="pass" />
 
                     <div class="flex">
-                        <input type="submit" value="Valider" class="inputlogin" name="ok">
+                        <input type="submit" value="Se connecter" class="inputlogin" name="login">
+                        &nbsp;
                         <button type="button" class="inputlogin" onclick="switchToRegister()">S'inscrire</button>
+                        &nbsp;
+                        <button type="button" class="inputlogin" onclick="switchToPass()">Changer password</button>
                     </div>
 
                     <p class="credit">Projet réalisé par Mathéo, Aymeric et Nathan ✨</p>
                 </div>
             </form>
-
-            <?php
-            if (!empty($error_msg)) {
-                echo "<p style='color:red;'>$error_msg</p>";
-            }
-            ?>
 
         </div>
 
@@ -100,33 +178,85 @@
         <div class="login" id="registerDiv" style="display: none;">
             <h1 class="h1login">Inscription</h1>
 
-            <form action="register.php" method="POST" class="formlogin">
+            <form action="" method="POST" class="formlogin" onsubmit="return validateForm()">
                 <div class="case">
                 <input type="text" required class="inputlog" placeholder="identifiant" name="identifiant" id="identifiant" />
-                <input type="password" required class="inputlog" placeholder="mot de passe" name="pass" id="pass" />
-                 <!--<input type="password" required class="inputlog" placeholder="Confirmer le mot de passe" name="confirm_pass" /> -->
+                <input type="email" required class="inputlog" placeholder="email" name="email" id="email" />
+                <input type="password" required class="inputlog" placeholder="mot de passe" name="pass" id="register_pass" />
+                <input type="password" required class="inputlog" placeholder="Confirmer le mot de passe" name="confirm_pass" id="confirm_pass" />
 
                 <div class="flex">
                     <input type="submit" value="S'inscrire" class="inputlogin" name="register">
                     <button type="button" class="inputlogin" onclick="switchToLogin()">Retour</button>
                 </div>
-          
                 <p class="credit">Projet réalisé par Mathéo, Aymeric et Nathan ✨</p>
                 </div>
             </form>
+        </div>
+
+        <div class="login" id="changePasswordDiv" style="display: none;">
+            <h1 class="h1login">Changer mot de passe</h1>
+            <form action="" method="Post" class="formlogin" onsubmit="return validatepass()">
+                <div class="case">
+                    <input type="text" required class="inputlog" placeholder="identifiant" name="identifiant" id="identifiant" />
+                    <input type="password" required class="inputlog" placeholder="Mot de passe actuel" name="current_pass" id="current_pass" />
+                    <input type="password" required class="inputlog" placeholder="Nouveau mot de passe" name="new_pass" id="new_pass" />
+                    <input type="password" required class="inputlog" placeholder="Confirmer le nouveau mot de passe" name="confirm_new_pass" id="confirm_new_pass" />
+
+                    <div class="flex">
+                        <input type="submit" value="Changer le mot de passe" class="inputlogin" name="change_password">
+                        <button type="button" class="inputlogin" onclick="switchToLogin()">Retour</button>
+                    </div>
+
+                    <p class="credit">Projet réalisé par Mathéo, Aymeric et Nathan ✨</p>
+                </div>
+            </form>
+
         </div>
 
         <script>
         function switchToRegister() {
             document.getElementById("loginDiv").style.display = "none";
             document.getElementById("registerDiv").style.display = "block";
+            document.getElementById("changePasswordDiv").style.display = "none";
         }
 
         function switchToLogin() {
             document.getElementById("registerDiv").style.display = "none";
             document.getElementById("loginDiv").style.display = "block";
+            document.getElementById("changePasswordDiv").style.display = "none";
         }
+        function switchToPass(){
+            document.getElementById("loginDiv").style.display = "none";
+            document.getElementById("registerDiv").style.display = "none";
+            document.getElementById("changePasswordDiv").style.display = "block";
+        }
+            // Fonction de validation du formulaire
+        function validateForm() {
+            var pass = document.getElementById("register_pass").value.trim();  // Utilisation de trim() pour enlever les espaces
+            var confirmPass = document.getElementById("confirm_pass").value.trim();  // Utilisation de trim() pour enlever les espaces
+
+            // Vérifie si les deux mots de passe sont identiques
+            if (pass !== confirmPass) {
+                alert("Les mots de passe ne correspondent pas.");
+                return false; // Empêche l'envoi du formulaire si les mots de passe ne correspondent pas
+            }
+            return true; // Si les mots de passe correspondent, on soumet le formulaire
+        }
+
+        function validatepass() {
+            var pass = document.getElementById("new_pass").value.trim();  // Utilisation de trim() pour enlever les espaces
+            var confirmPass = document.getElementById("confirm_new_pass").value.trim();  // Utilisation de trim() pour enlever les espaces
+
+            // Vérifie si les deux mots de passe sont identiques
+            if (pass !== confirmPass) {
+                alert("Les mots de passe ne correspondent pas.");
+                return false; // Empêche l'envoi du formulaire si les mots de passe ne correspondent pas
+            }
+            return true; // Si les mots de passe correspondent, on soumet le formulaire
+        }
+        
+    
     </script>
 </body>
-
 </html>
