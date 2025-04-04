@@ -1,5 +1,5 @@
 CREATE TABLE action (
-    action_name VARCHAR(255) PRIMARY KEY,
+    name VARCHAR(255) PRIMARY KEY,
     dividende_part FLOAT,
     dividend_payment_date DATE
  );
@@ -26,7 +26,7 @@ CREATE TABLE action_history (
     date DATE,
     price_on_this_date INT,
     PRIMARY KEY(action_name, date),
-    FOREIGN KEY action_name REFERENCES action(name)
+    FOREIGN KEY (action_name) REFERENCES action(name)
 );
 
 CREATE TABLE news (
@@ -34,13 +34,13 @@ CREATE TABLE news (
     text TEXT,
     impacted_action_name VARCHAR(255),
     action_variation FLOAT,
-    FOREIGN KEY impacted_action_name REFERENCES action(name)
+    FOREIGN KEY (impacted_action_name) REFERENCES action(name)
 );
 
 CREATE TABLE follows (
     follower VARCHAR(255),
     followed VARCHAR(255),
     PRIMARY KEY(follower, followed),
-    FOREIGN KEY follower REFERENCES user(email),
-    FOREIGN KEY followed REFERENCES user(email)
+    FOREIGN KEY (follower) REFERENCES users(email),
+    FOREIGN KEY (followed) REFERENCES users(email)
 );
