@@ -1,5 +1,6 @@
 CREATE TABLE action (
     name VARCHAR(255) PRIMARY KEY,
+    price FLOAT,
     dividende_part FLOAT,
     dividend_payment_date DATE
  );
@@ -8,14 +9,14 @@ CREATE TABLE action (
      email VARCHAR(255) PRIMARY KEY,
      pseudo VARCHAR(255),
      mdp VARCHAR(255),
-     solde INT
+     solde FLOAT
 );
 
 CREATE TABLE global_wallet (
     email_user VARCHAR(255),
     action_name VARCHAR(255),
     quantity INT,
-    average_price INT,
+    average_price FLOAT,
     PRIMARY KEY(email_user, action_name),
     FOREIGN KEY (email_user) REFERENCES users(email),
     FOREIGN KEY (action_name) REFERENCES action(name)
@@ -24,7 +25,7 @@ CREATE TABLE global_wallet (
 CREATE TABLE action_history (
     action_name VARCHAR(255),
     date DATE,
-    price_on_this_date INT,
+    price_on_this_date FLOAT,
     PRIMARY KEY(action_name, date),
     FOREIGN KEY (action_name) REFERENCES action(name)
 );
