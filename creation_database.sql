@@ -2,7 +2,7 @@ CREATE TABLE dividende (
     id INT PRIMARY KEY AUTO_INCREMENT,
     pourcentage FLOAT NOT NULL,
     date_distribution DATE
-)
+);
 
 CREATE TABLE action (
     id INT PRIMARY KEY AUTO_INCREMENT,
@@ -37,7 +37,7 @@ CREATE TABLE action_history (
     action_id INT,
     date DATE,
     price_at_this_date DECIMAL(10,2),
-    FOREIGN KEY (action_name) REFERENCES action(id)
+    FOREIGN KEY (action_id) REFERENCES action(id)
 );
 
 CREATE TABLE news (
