@@ -25,11 +25,11 @@
             $bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             // ➤ Récupérer l'identifiant de l'utilisateur connecté
             $userId = $_SESSION['user_id'];
-            $stmt = $bdd->prepare("SELECT identifiant FROM utilisateur WHERE id = :id");
+            $stmt = $bdd->prepare("SELECT pseudo FROM utilisateur WHERE id = :id");
             $stmt->bindParam(':id', $userId, PDO::PARAM_INT);
             $stmt->execute();
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
-            $identifiant = $user ? htmlspecialchars($user['identifiant']) : 'Utilisateur';
+            $pseudo = $user ? htmlspecialchars($user['pseudo']) : 'Utilisateur';
 
             // On sélectionne 2 actualités différentes aléatoires
             $sql = "SELECT * FROM news ORDER BY RAND() LIMIT 2";
@@ -43,11 +43,11 @@
     ?>
     <header class="header1">
         <div class="enssemble">
-        <p style="text-align:center; font-weight: bold; font-size: 1.2em;">Connecté: <?php echo $identifiant; ?></p>
+        <p style="text-align:center; font-weight: bold; font-size: 1.2em;">Connecté: <?php echo $pseudo; ?></p>
             <h1 style="color:black;">NEWS</h1>
             <nav class="navdeco">
                 <ul>
-                    <li class="lideco"><a  href="./acueil.php" >Accueil</a></li>
+                    <li class="lideco"><a  href="./accueil.php" >Accueil</a></li>
                     <li class="lidecomenu1"><a href="./questionaire.html" >Portefeuille</a></li>
                 </ul>
             </nav>
