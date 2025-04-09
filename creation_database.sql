@@ -24,8 +24,8 @@ CREATE TABLE action (
 
 CREATE TABLE global_wallet (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    id_user VARCHAR(255),
-    id_action VARCHAR(255),
+    id_user INT,
+    id_action INT,
     quantity INT,
     average_price DECIMAL(10,2),
     FOREIGN KEY (id_user) REFERENCES users(id),
@@ -34,9 +34,9 @@ CREATE TABLE global_wallet (
 
 CREATE TABLE action_history (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    action_name VARCHAR(255),
+    action_id INT,
     date DATE,
-    price_at_this_date FLOAT,
+    price_at_this_date DECIMAL(10,2),
     FOREIGN KEY (action_name) REFERENCES action(id)
 );
 
@@ -44,14 +44,14 @@ CREATE TABLE news (
     id INT PRIMARY KEY AUTO_INCREMENT,
     title VARCHAR(255),
     text TEXT,
-    impacted_action_id VARCHAR(255),
+    impacted_action_id INT,
     FOREIGN KEY (impacted_action_id) REFERENCES action(id)
 );
 
 CREATE TABLE follows (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    id_follower VARCHAR(255),
-    id_followed VARCHAR(255),
-    FOREIGN KEY (follower) REFERENCES users(email),
-    FOREIGN KEY (followed) REFERENCES users(email)
+    id_follower INT,
+    id_followed INT,
+    FOREIGN KEY (follower) REFERENCES users(id),
+    FOREIGN KEY (followed) REFERENCES users(id)
 );
