@@ -52,6 +52,6 @@ CREATE TABLE follows (
     id INT PRIMARY KEY AUTO_INCREMENT,
     id_follower INT,
     id_followed INT,
-    FOREIGN KEY (id_follower) REFERENCES users(id),
-    FOREIGN KEY (id_followed) REFERENCES users(id)
+    FOREIGN KEY (id_follower) REFERENCES utilisateur(id),
+    FOREIGN KEY (id_followed) REFERENCES utilisateur(id)
 );
