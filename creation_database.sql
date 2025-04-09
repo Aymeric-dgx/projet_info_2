@@ -28,7 +28,7 @@ CREATE TABLE global_wallet (
     id_action INT,
     quantity INT,
     average_price DECIMAL(10,2),
-    FOREIGN KEY (id_user) REFERENCES users(id),
+    FOREIGN KEY (id_user) REFERENCES utilisateur(id),
     FOREIGN KEY (id_action) REFERENCES action(id)
 );
 
