@@ -42,23 +42,23 @@
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (isset($_POST['register'])) {
-            $identifiant = $_POST['identifiant'];
-            $pass = $_POST['pass'];
+            $pseudo = $_POST['pseudo'];
+            $mdp = $_POST['mdp'];
             $email = $_POST['email'];
     
             // Vérifier si l'identifiant ou l'email existent déjà
-            $check = $bdd->prepare("SELECT id FROM utilisateur WHERE identifiant = :identifiant OR email = :email");
-            $check->execute(["identifiant" => $identifiant, "email" => $email]);
+            $check = $bdd->prepare("SELECT id FROM utilisateur WHERE pseudo = :pseudo OR email = :email");
+            $check->execute(["pseudo" => $pseudo, "email" => $email]);
     
             if ($check->rowCount() > 0) {
-                $_SESSION['message'] = "❌ Identifiant ou email déjà utilisé.";
+                $_SESSION['message'] = "❌ pseudo ou email déjà utilisé.";
             } else {
                 // Insertion dans la base de données
-                $_request = $bdd->prepare("INSERT INTO utilisateur(identifiant, email, mot_de_passe) VALUES(:identifiant, :email, :pass)");
+                $_request = $bdd->prepare("INSERT INTO utilisateur(pseudo, email, mdp) VALUES(:pseudo, :email, :mdp)");
                 $success = $_request->execute(
                     array(
-                        "identifiant" => $identifiant,
-                        "pass" => $pass,
+                        "pseudo" => $pseudo,
+                        "mdp" => $mdp,
                         "email" => $email
                     )
                 );
@@ -67,23 +67,23 @@
             header("Location: ".$_SERVER['PHP_SELF']); // Recharge la page pour afficher le message
         exit();
         }elseif (isset($_POST['login'])) {
-            $identifiant = $_POST['identifiant'];
-            $pass = $_POST['pass'];
+            $pseudo = $_POST['pseudo'];
+            $mdp = $_POST['mdp'];
         
-            if (!empty($identifiant) && !empty($pass)) {
+            if (!empty($pseudo) && !empty($mdp)) {
                 // Préparation sécurisée de la requête
-                $stmt = $bdd->prepare("SELECT * FROM utilisateur WHERE identifiant = :identifiant AND mot_de_passe = :pass");
-                $stmt->bindParam(':identifiant', $identifiant);
-                $stmt->bindParam(':pass', $pass); 
+                $stmt = $bdd->prepare("SELECT * FROM utilisateur WHERE pseudo = :pseudo AND mdp = :mdp");
+                $stmt->bindParam(':pseudo', $pseudo);
+                $stmt->bindParam(':mdp', $mdp); 
                 $stmt->execute();
                 $user = $stmt->fetch(PDO::FETCH_ASSOC);
         
                 if ($user) {
                     // Connexion réussie
                     $_SESSION['user_id'] = $user['id']; // Ou autre identifiant unique
-                    $_SESSION['identifiant'] = $user['identifiant'];
+                    $_SESSION['pseudo'] = $user['pseudo'];
         
-                    header("location:new.php");
+                    header("location:accueil.php");
                 } else {
                     $_SESSION['message'] ="❌ Information faux.";
                 }
@@ -91,14 +91,14 @@
                 $error_msg = "Veuillez remplir tous les champs.";
             }
         }elseif (isset($_POST['change_password'])) {
-            $identifiant = $_POST['identifiant'];
+            $pseudo = $_POST['pseudo'];
             $current_pass = $_POST['current_pass'];
             $new_pass = $_POST['new_pass'];
             $confirm_new_pass = $_POST['confirm_new_pass'];
     
             // Vérification si le mot de passe actuel est correct
-            $stmt = $bdd->prepare("SELECT * FROM utilisateur WHERE identifiant = :identifiant AND mot_de_passe = :current_pass");
-            $stmt->bindParam(':identifiant', $identifiant);
+            $stmt = $bdd->prepare("SELECT * FROM utilisateur WHERE pseudo = :pseudo AND mdp = :current_pass");
+            $stmt->bindParam(':pseudo', $pseudo);
             $stmt->bindParam(':current_pass', $current_pass);
             $stmt->execute();
     
@@ -108,9 +108,9 @@
                 // Vérifier si les nouveaux mots de passe correspondent
                 if ($new_pass === $confirm_new_pass) {
                     // Mettre à jour le mot de passe
-                    $update_stmt = $bdd->prepare("UPDATE utilisateur SET mot_de_passe = :new_pass WHERE identifiant = :identifiant");
+                    $update_stmt = $bdd->prepare("UPDATE utilisateur SET mdp = :new_pass WHERE pseudo = :pseudo");
                     $update_stmt->bindParam(':new_pass', $new_pass);
-                    $update_stmt->bindParam(':identifiant', $identifiant);
+                    $update_stmt->bindParam(':pseudo', $pseudo);
     
                     if ($update_stmt->execute()) {
                         $_SESSION['message'] = "✅ Mot de passe changé avec succès.";
@@ -155,10 +155,10 @@
             }
             ?>
             <form action="" method="Post" class="formlogin">
-                <div class="case">
-                    <input type="text" required class="inputlog" placeholder="identifiant" name="identifiant" id="identifiant" />
+                <div class="case"> 
+                    <input type="text" required class="inputlog" placeholder="pseudo" name="pseudo" id="pseudo" value="" autocomplete="off" />
 
-                    <input type="password" required class="inputlog" placeholder="mot de passe" name="pass" id="pass" />
+                    <input type="password" required class="inputlog" placeholder="mot de passe" name="mdp" id="pass" value="" autocomplete="off" />
 
                     <div class="flex">
                         <input type="submit" value="Se connecter" class="inputlogin" name="login">
@@ -180,10 +180,10 @@
 
             <form action="" method="POST" class="formlogin" onsubmit="return validateForm()">
                 <div class="case">
-                <input type="text" required class="inputlog" placeholder="identifiant" name="identifiant" id="identifiant" />
-                <input type="email" required class="inputlog" placeholder="email" name="email" id="email" />
-                <input type="password" required class="inputlog" placeholder="mot de passe" name="pass" id="register_pass" />
-                <input type="password" required class="inputlog" placeholder="Confirmer le mot de passe" name="confirm_pass" id="confirm_pass" />
+                <input type="text" required class="inputlog" placeholder="pseudo" name="pseudo" id="pseudo" value="" />
+                <input type="email" required class="inputlog" placeholder="email" name="email" id="email" value="" />
+                <input type="password" required class="inputlog" placeholder="mot de passe" name="mdp" id="register_pass" value=""/>
+                <input type="password" required class="inputlog" placeholder="Confirmer le mot de passe" name="confirm_pass" id="confirm_pass" value=""/>
 
                 <div class="flex">
                     <input type="submit" value="S'inscrire" class="inputlogin" name="register">
@@ -198,10 +198,10 @@
             <h1 class="h1login">Changer mot de passe</h1>
             <form action="" method="Post" class="formlogin" onsubmit="return validatepass()">
                 <div class="case">
-                    <input type="text" required class="inputlog" placeholder="identifiant" name="identifiant" id="identifiant" />
-                    <input type="password" required class="inputlog" placeholder="Mot de passe actuel" name="current_pass" id="current_pass" />
-                    <input type="password" required class="inputlog" placeholder="Nouveau mot de passe" name="new_pass" id="new_pass" />
-                    <input type="password" required class="inputlog" placeholder="Confirmer le nouveau mot de passe" name="confirm_new_pass" id="confirm_new_pass" />
+                    <input type="text" required class="inputlog" placeholder="pseudo" name="pseudo" id="pseudo" value="" />
+                    <input type="password" required class="inputlog" placeholder="Mot de passe actuel" name="current_pass" id="current_pass" value="" />
+                    <input type="password" required class="inputlog" placeholder="Nouveau mot de passe" name="new_pass" id="new_pass" value="" />
+                    <input type="password" required class="inputlog" placeholder="Confirmer le nouveau mot de passe" name="confirm_new_pass" id="confirm_new_pass" value="" />
 
                     <div class="flex">
                         <input type="submit" value="Changer le mot de passe" class="inputlogin" name="change_password">
