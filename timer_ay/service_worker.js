@@ -15,5 +15,5 @@ self.addEventListener('install', (event) => {
 
 self.addEventListener('activate', (event) => {
   event.waitUntil(clients.claim());
-  setInterval(update_loop, 5000); // Démarre la boucle au moment de l’activation
+  setInterval(update_loop, updatePeriod); // Démarre la boucle au moment de l’activation
 });
