@@ -81,8 +81,8 @@
                 if ($user) {
                     // Connexion réussie
                     $_SESSION['user_id'] = $user['id']; // Ou autre identifiant unique
-                    $_SESSION['pseudo'] = $user['pseudo'];
-        
+                    $_SESSION['pseudo'] = $user['pseudo'];    
+                    $_SESSION['email'] = $user['email'];
                     header("location:accueil.php");
                 } else {
                     $_SESSION['message'] ="❌ Information faux.";
