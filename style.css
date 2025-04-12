@@ -118,7 +118,12 @@
 }
 .lideco {
     display: inline-block;
+    display: flex;
+    justify-content: center;  /* Centrage horizontal */
+    align-items: center;      /* Centrage vertical */
+    text-align: center;
     background-color: black;
+    height: 15px;
     padding: 12px 24px;
     font-size: 16px;
     font-weight: bold;
@@ -140,6 +145,7 @@
     transform: scale(0.98);
 }
 .lidecomenu1{
+    height: 15px;
     height: 15%;
     display: inline-block;
     padding: 12px 24px;
@@ -335,7 +341,7 @@ ul li a {
     }
 }
 .footer {
-    background-color: #2e2e2e;
+    background-color: #007BFF;
     color: #f1f1f1;
     padding: 30px 0;
     text-align: center;
@@ -345,7 +351,6 @@ ul li a {
 }
 
 .footer-content {
-    max-width: 1000px;
     margin: 0 auto;
     padding: 0 20px;
 }
@@ -666,4 +671,198 @@ ul li a {
     background-color: blue; /* Couleur encore plus foncée quand on clique */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Ombre plus petite */
     transform: scale(0.95); /* Réduire légèrement la taille du bouton */
+}
+/* From Uiverse.io by JohnnyCSilva */ 
+.coin {
+    margin-left: 200px;
+    margin-right: 150px;
+    font-size: 200px;
+    width: 0.1em;
+    height: 1em;
+    background: linear-gradient(#faa504, #141001);
+    animation: rotate_4001510 7s infinite linear;
+    transform-style: preserve-3d;
+  }
+  
+  .coin .side, .coin:before, .coin:after {
+    content: "";
+    position: absolute;
+    width: 1em;
+    height: 1em;
+    overflow: hidden;
+    border-radius: 50%;
+    right: -0.4em;
+    text-align: center;
+    line-height: 1;
+    transform: rotateY(-90deg);
+    -moz-backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+  }
+  
+  .coin .tails, .coin:after {
+    left: -0.4em;
+    transform: rotateY(90deg);
+  }
+  
+  .coin:before, .coin:after {
+    background: linear-gradient(#faa504, #141001);
+    backface-visibility: hidden;
+    transform: rotateY(90deg);
+  }
+  
+  .coin:after {
+    transform: rotateY(-90deg);
+  }
+  
+  @keyframes rotate_4001510 {
+    100% {
+      transform: rotateY(360deg);
+    }
+  }
+  
+  .svg_back {
+    transform: scaleX(-1);
+  }
+  
+.middle {
+    gap: 0px;
+    background-color: #007BFF;
+    display: flex;
+    justify-content: space-between; /* Cela sépare les enfants sur les extrémités */
+    align-items: center; /* Alignement vertical au centre */
+    border-right: 2px solid #ccc;
+}
+  
+  .header {
+    display: flex;
+    align-items: center;
+    grid-gap: 1rem;
+    gap: 1rem;
+  }
+  
+  .icon {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9999px;
+    background-color: rgba(96, 165, 250, 1);
+    padding: 0.5rem;
+    color: rgba(255, 255, 255, 1);
+  }
+  
+  .icon svg {
+    height: 1rem;
+    width: 1rem;
+  }
+  
+  .alert {
+    font-weight: 600;
+    color: rgba(107, 114, 128, 1);
+  }
+  
+  .message {
+    margin-top: 1rem;
+    color: rgba(107, 114, 128, 1);
+  }
+  .text-container {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    border-radius: 15px;
+    padding: 25px;
+    margin: 20px auto;
+    max-width: 800px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    color: #fff;
+    font-family: 'Arial', sans-serif;
+    border-left: 5px solid #007BFF;
+    position: relative;
+    overflow: hidden;
+}
+
+.text-container::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(0, 123, 255, 0.1) 0%, transparent 70%);
+    z-index: 0;
+}
+
+.text-container h2 {
+    margin: 15px 0;
+    font-size: 1.2em;
+    line-height: 1.5;
+    position: relative;
+    z-index: 1;
+}
+
+.text-container h2:first-child {
+    font-size: 1.5em;
+    color: #4cc9f0;
+    margin-top: 0;
+}
+
+.text-container h2:last-child {
+    font-weight: bold;
+    color: #f72585;
+}
+
+/* Animation pour le texte "🚀" */
+.text-container h2:last-child::after {
+    content: "🚀";
+    display: inline-block;
+    margin-left: 8px;
+    animation: rocketPulse 1.5s infinite;
+}
+
+@keyframes rocketPulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+.gauche_action {
+    flex: 1;
+    background: linear-gradient(to bottom, #f0f6ff, #0ce242);
+    padding: 30px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-right: 2px solid #ccc;
+    animation: fadeIn 1s ease;
+}
+.droite_action {
+    flex: 1;
+    background: linear-gradient(to bottom, #fff2f2, #f10707);
+    padding: 30px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 1.2s ease;
+    text-align: center;
+}
+.news-title_action {
+    color: white;
+    font-size: 1.8rem;
+    font-weight: 700;
+    padding: 12px 30px;
+    border-radius: 50px;
+    box-shadow: 
+        0 5px 0 rgba(0,0,0,0.2),
+        inset 0 2px 3px rgba(255,255,255,0.3);
+    position: relative;
+    transform: perspective(500px) rotateX(10deg);
+}
+
+.gauche_action .news-title_action {
+    background: #4CAF50;
+    border-bottom: 4px solid #2E7D32;
+}
+
+.droite_action .news-title_action {
+    background: #ff3333;
+    border-bottom: 4px solid #cc0000;
 }
