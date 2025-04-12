@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <title>L'Actualités</title>
         <link rel="stylesheet" href="style.css">
-        <link rel="website icon" href="photo/logo3.png">
+        <link rel="website icon" href="photo/logo.png">
     </head>
 <body id="body3">
     <?php
