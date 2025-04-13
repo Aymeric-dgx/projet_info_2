@@ -1,13 +1,22 @@
+-- Pour incrémenter les mois à chaque cycle de 2 min : SET current_date = DATE_ADD(current_date, INTERVAL 1 MONTH);
+-- Poir récupérer le mois sous forme de int : SELECT MONTH(date_inscription) FROM ...
+
+CREATE TABLE global_date (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    global_date DATE  -- Date globale du jeu, dont on devra incrémenter le mois à chaque "tour"
+ );
+   
 CREATE TABLE dividende (
     id INT PRIMARY KEY AUTO_INCREMENT,
     pourcentage FLOAT NOT NULL,
-    date_distribution DATE
+    date_distribution INT -- val : 1 à 12. On comparera avec SELECT MONTH(...) FROM ... poue savoir si c'est le mois de versement ou non
 );
 
 CREATE TABLE action (
     id INT PRIMARY KEY AUTO_INCREMENT,
     nom VARCHAR(255) NOT NULL,
     symbole VARCHAR(255) NOT NULL UNIQUE,
+    description TEXT NOT NULL,
     price DECIMAL(10,2) NOT NULL,
     id_dividende INT,
     FOREIGN KEY (id_dividende) REFERENCES dividende(id)
