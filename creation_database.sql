@@ -31,6 +31,15 @@ CREATE TABLE action (
      date_inscription TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+CREATE TABLE solde_history (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    id_user INT,
+    solde_value INT,
+    registement_date DATE,
+    FOREIGN KEY (id_user) REFERENCES utilisateur(id)
+);
+
+
 CREATE TABLE global_wallet (
     id INT PRIMARY KEY AUTO_INCREMENT,
     id_user INT,
