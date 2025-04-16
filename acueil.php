@@ -40,37 +40,28 @@
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
         $pseudo = $user ? htmlspecialchars($user['pseudo']) : 'Utilisateur non trouvé';
 
+        // Déterminer le critère de tri
+        $tri = $_GET['tri'] ?? 'nom';
 
-        // On sélectionne toutes les actions
-        $sql = "SELECT * FROM action";
-        $requete = $bdd->query($sql);
-        $newsList = $requete->fetchAll(PDO::FETCH_ASSOC);
+        // Construire la requête SQL - IMPORTANT: utilisez les bons noms de colonnes
+        $sql = "SELECT * FROM action ORDER BY ";
 
-
-        // Récupère le filtre sélectionné depuis le formulaire
-        $filtre = isset($_GET['filtre']) ? $_GET['filtre'] : 'rien'; // Valeur par défaut si rien n'est sélectionné
-
-        // Fonction pour filtrer par nom
-        if ($filtre === 'nom') {
-            usort($newsList, function($a, $b) {
-                return strcmp($a['nom'], $b['nom']); // Trie par ordre alphabétique sur le nom
-            });
-        } elseif ($filtre === 'prix') {
-            usort($newsList, function($a, $b) {
-                return $a['price'] <=> $b['price']; // Trie par prix croissant
-            });
-        } elseif ($filtre === 'progression_1m') {
-            usort($newsList, function($a, $b) {
-                return $a['progression_1m'] <=> $b['progression_1m']; // Trie par progression 1 mois
-            });
-        } elseif ($filtre === 'progression_an') {
-            usort($newsList, function($a, $b) {
-                return $a['progression_an'] <=> $b['progression_an']; // Trie par progression 1 an
-            });
+        switch($tri) {
+            case 'prix':
+                $sql .= "price ASC"; // Changé 'prix' en 'price' pour correspondre à votre affichage
+                break;
+            case 'progression_1m':
+                $sql .= "progression_1mois DESC";
+                break;
+            case 'progression_an':
+                $sql .= "progression_1an DESC";
+                break;
+            default:
+                $sql .= "nom ASC";
         }
 
-        // Si aucun filtre n'est sélectionné, ou si "rien" est sélectionné, affiche toutes les actions sans modification
-
+        $stmt = $bdd->query($sql);
+        $resultats = $stmt->fetchAll(PDO::FETCH_ASSOC);
     ?>
     <header class="header_accueil">
         <div class="enssemble">
@@ -89,35 +80,32 @@
     <main class="teste">
         <br>
         <div style="margin-left: 10px;"> <h1 class="game-date"> <?php echo date('d/m/Y'); ?></h1></div>
-        <form method="GET" action="">
+        <form method="GET" action="" id="filterForm">
         <div class="radio-container">
             <div class="radio-input">
                 <label>
-                <input type="radio" id="value-1" name="filter" value="nom">
-                <span>nom</span>
+                    <input type="radio" name="tri" value="nom" <?= (empty($_GET['tri']) || $_GET['tri'] === 'nom' ? 'checked' : '') ?>>
+                    <span>nom</span>
                 </label>
                 <label>
-                <input type="radio" id="value-2" name="filter" value="prix">
-                <span>prix</span>
+                    <input type="radio" name="tri" value="prix" <?= (isset($_GET['tri']) && $_GET['tri'] === 'prix' ? 'checked' : '') ?>>
+                    <span>prix</span>
                 </label>
                 <label>
-                <input type="radio" id="value-3" name="filter" value="progression_1m">
-                <span>progression 1 mois</span>
+                    <input type="radio" name="tri" value="progression_1m" <?= (isset($_GET['tri']) && $_GET['tri'] === 'progression_1m' ? 'checked' : '') ?>>
+                    <span>progression 1 mois</span>
                 </label>
                 <label>
-                <input type="radio" id="value-4" name="filter" value="progression_an">
-                <span>progression 1 an</span>
+                    <input type="radio" name="tri" value="progression_an" <?= (isset($_GET['tri']) && $_GET['tri'] === 'progression_an' ? 'checked' : '') ?>>
+                    <span>progression 1 an</span>
                 </label>
                 <span class="selection"></span>
             </div>
-        <div class="center">
-            <button type="submit" class="valider_filtre">Valider</button>
-        </div>
         </div>
         </form>
         <div class="flex_action">
             <?php
-                foreach($newsList as $action): ?>
+                foreach($resultats as $action): ?>
                 <div class="card">
                 <a href="info.php?id=<?php echo $action['id']; ?>" ><!--- nathannnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn--->
                             <button type="card-button" class="info-button">Info</button>
@@ -232,7 +220,7 @@
     </div>
             <br>
         </div>
-    <br>
+    
     <div class="container">
         <!-- Partie gauche -->
         <div class="gauche_action">
@@ -250,5 +238,17 @@
         <p>Réalisé par Mathéo, Aymeric et Nathan</p>
     </div>
     </footer>
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+    const radios = document.querySelectorAll('input[type="radio"][name="tri"]');
+    
+    // Soumettre automatiquement le formulaire quand un radio est cliqué
+    radios.forEach(radio => {
+        radio.addEventListener('change', function() {
+            document.getElementById('filterForm').submit();
+        });
+    });
+});
+</script>
 </body>
 </html>
