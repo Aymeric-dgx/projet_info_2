@@ -37,8 +37,8 @@
                     <h3><?php echo $_SESSION['email']; ?></h3>
                 </div>
                 <div>
-                    <h2>Solde : <?php include 'script_php/get_solde.php'; ?> </h2>
-                    <h2>Valeur totale : <?php include 'script_php/get_total_value.php'; ?> </h2>
+                    <h2>Solde : <?php include 'scripts/get_solde.php'; ?> </h2>
+                    <h2>Valeur totale : <?php include 'scripts/get_total_value.php'; ?> </h2>
                 </div>
             </div>
             <div class="bottom_box">
@@ -58,7 +58,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php include 'script_php/get_followers.php'; ?>
+                                <?php include 'scripts/get_followers.php'; ?>
                                 <?php foreach ($followers as $follower): ?>
                                     <tr>
                                         <td><?php echo $follower['pseudo']; ?></td>
@@ -81,7 +81,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php include 'script_php/get_follows.php'; ?>
+                                <?php include 'scripts/get_follows.php'; ?>
                                 <?php foreach ($follows as $follow): ?>
                                     <tr>
                                         <td><?php echo $follow['pseudo']; ?></td>
@@ -100,7 +100,7 @@
         <div class="right_column">
             <h1 class="title_container_actions">Actions possédées</h1>
             <div class="scrollable_window">
-                <?php include 'script_php/script_show_action_possesed.php'; ?>
+                <?php include 'scripts/script_show_action_possesed.php'; ?>
                 <div class="actions_container">
                     <?php foreach ($actions as $action): ?>
                         <div class="action_cube">
