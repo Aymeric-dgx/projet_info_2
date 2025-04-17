@@ -10,11 +10,7 @@
         }
     </script>
     <link rel="stylesheet" href="profil_css.css">
-    <?php session_start();
-        $_SESSION['user_id'] = 1; // Pour test, à supprimer
-        $_SESSION['pseudo'] = 'Mathéo'; // Pour test, à supprimer
-        $_SESSION['email'] = 'mathéo@mathéo.com'; // Pour test, à supprimer
-    ?>
+    <?php session_start(); ?>
 </head>
 
 <body>
