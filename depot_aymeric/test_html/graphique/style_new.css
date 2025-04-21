@@ -1,0 +1,241 @@
+/************************************************** Header ************************************************************/
+.header_new{
+    border-bottom: 3px solid black;
+    background-color: #007BFF;
+}
+
+.h1{
+    color:black;
+}
+
+.h2{
+    color: white;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 100px;
+    display: flex;
+    justify-content: center;
+}
+
+.div_header{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.p{
+    text-align:center;
+    font-weight: bold;
+    font-size: 28px;
+}
+
+#body_new{
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    background-size: auto;
+    background-repeat: no-repeat;
+}
+
+.sniper {
+    height: auto;
+    width: 80px;
+    border-radius: 50%;
+    animation: ani 2.5s linear infinite;
+
+    /* Intégration de l'image */
+    background-color: black;
+    background-image: url('http://localhost/bourse/photo/logo.png');
+    background-size: cover;
+    background-position: center;
+}
+
+
+
+/********************************************* Boutons de navigation **************************************************/
+.navdecomenu{
+    display: block;
+}
+.navdecomenu ul {
+    display: flex;
+    gap: 50px;
+    list-style: none;
+
+}
+.lidecomenu1{
+    .a{color: white}
+    color: white;
+    height: 15%;
+    display: inline-block;
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    background-color: black;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+}
+.lidecomenu1:hover {
+    background-color: #0056b3;
+    border-bottom: 3px solid black;
+    padding-bottom: 10px;
+    transform: scale(1.05);
+}
+.lidecomenu1:active {
+    background-color: #004494;
+    border-bottom: 3px solid black;
+    padding-bottom: 10px;
+    transform: scale(0.98);
+}
+
+.lidecomenu2{
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+}
+
+
+
+/*********************************************** Animation d’apparition ***********************************************/
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+
+/******************************************************** Body ********************************************************/
+.title {
+    font-size: 36px;
+    font-weight: bold;
+    text-transform: uppercase;
+    background: linear-gradient(135deg, #0F1C5A 0%, #346AA9 100%);
+    color: white;
+    padding: 15px;
+    border-radius: 10px;
+    display: inline-block;
+    letter-spacing: 2px;
+}
+
+.container {
+    display: flex;
+    animation: fadeIn 0.6s ease-in-out;
+    height: auto;
+    width: 100%;
+}
+
+.gauche {
+    flex: 1;
+    padding: 30px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    animation: fadeIn 1s ease;
+}
+
+.droite {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    border-radius: 15px;
+    padding: 60px ;
+    margin: 20px;
+    max-width: 800px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    color: #fff;
+    font-family: 'Arial', sans-serif;
+    position: relative;
+    overflow: hidden;
+}
+
+.new_graph {
+    width: 100%;
+    height: 100%;
+}
+
+/************************************************** Bouton graphique **************************************************/
+.controls {
+    display: flex;
+    justify-content: center;
+}
+
+
+.control {
+    color: rgba(255, 255, 255, 0.692);
+    padding: 10px 15px;
+    justify-content: space-between;
+    align-items: center;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.397);
+    background: rgba(255, 255, 255, 0.068);
+    overflow: hidden;
+    font-size: 0.9rem;
+    font-weight: 600;
+    gap: 8px;
+    border-radius: 5px;
+    margin: 0 5px;
+    transition: 0.2s;
+    border: 1px solid transparent;
+}
+
+.control:hover {
+    border-color: rgba(255, 255, 255, 0.623);
+    background: linear-gradient(
+            to bottom,
+            rgba(255, 255, 255, 0.144),
+            rgba(255, 255, 255, 0.247),
+            rgba(255, 255, 255, 0.39)
+    );
+    box-shadow: 0 6px rgba(255, 255, 255, 0.623);
+    transform: translateY(-6px);
+}
+
+.control:active {
+    transform: translateY(2px);
+    box-shadow: none;
+}
+
+
+/***************************************************** Footer *********************************************************/
+.footer {
+    background-color: #007BFF;
+    color: #f1f1f1;
+    padding: 30px 0;
+    text-align: center;
+    font-family: 'Segoe UI', sans-serif;
+    border-top: 2px solid #444;
+    animation: fadeIn 1s ease-in-out;
+}
+
+.footer-content {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.footer p {
+    margin: 5px 0;
+    font-size: 14px;
+    color: #cccccc;
+}
+
+
+
+/***************************************** Adaptation de la page (responsive) *****************************************/
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .gauche, .droite {
+        width: 80%;
+        padding: 30px;
+        border-right: none;
+    }
+}
