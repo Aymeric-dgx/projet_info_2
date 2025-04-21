@@ -1,0 +1,264 @@
+body, html {
+    margin : 0px;
+    padding : 0px;
+    display : flex;
+    flex-direction : column;
+    height : 100vh;
+    background: linear-gradient(45deg, black, gray, white);
+}
+
+a {
+    text-decoration: none;
+}
+
+
+
+
+
+
+/***************************************** Styles main (répartition des div "principale sur la page) **************************************/
+
+.main_style {
+    display : flex;
+    flex : 1;
+}
+
+.left_column {
+    display : flex;
+    flex-direction : column;
+    width : 60%;
+}
+
+.top_box {
+    display : flex;
+    justify-content: space-between;
+    height : 10%;
+    background-color : gray;
+    color : white;
+    padding : 10px;
+    border-bottom-right-radius : 16px;
+}
+
+.bottom_box {
+    flex : 1; /*Remplie tout l'espace restant*/
+    color : white;
+}
+
+.right_column {
+    flex : 1;
+    width : 40%;
+}
+
+
+
+
+
+
+
+/******************************************************** Style top box ******************************************************/
+.top_box h1, .top_box h2, .top_box h3 {
+    margin: 5px 0; /* Réduit la marge verticale */
+    padding: 0;
+}
+
+.top_box {
+    background-color : rgb(83, 83, 83);
+    color : white;
+    padding : 10px;
+    border-bottom-right-radius : 16px;
+}
+
+
+
+
+/********************************************************* Style bottom box ***************************************************/
+.follow_container {
+    display : flex;
+    justify-content : space-between;
+}
+
+.sub_follow_container {
+    width : 45%;
+}
+
+.data_table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 5px;
+    font-size: 16px;
+    text-align: center;
+}
+
+.data_table th, .data_table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    color : white;
+}
+
+.data_table th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+    color : black;
+}
+
+
+
+
+
+
+
+/************************************************************** Style right box *********************************************/
+
+.title_container_actions {
+    display : flex;
+    justify-content: center;
+    align-items : center;
+    height : 10%;
+}
+
+.actions_container {
+    display : flex;
+    flex-wrap : wrap;
+    gap: 15px;
+    padding: 10px;
+}
+
+.action_cube {
+    width: 150px;
+    height: 150px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: black;
+    color : white;
+    padding: 10px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.scrollable_window {
+    height : 450px;
+    width : 95%;
+    overflow-y: auto;
+    overflow-x : hidden;
+    margin-left : 5%;
+}
+
+
+
+
+
+/************************************************************ Style header de mathéo ********************************************************/
+
+@keyframes ani {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+.header_accueil{
+    background-color: black;
+    color: white;
+}
+
+.enssemble{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+.sniper {
+    height: auto;
+    width: 80px;
+    border-radius: 50%;
+    animation: ani 2.5s linear infinite;
+    
+    /* Intégration de l'image */
+    background-color: black;
+    background-image: url('photo/logo.png'); 
+    background-size: cover;
+    background-position: center;
+  }
+
+  .logo{
+    align-items: center;
+    text-align: center;
+    font-family: 'Rajdhani', 'Arial Narrow', sans-serif;
+    font-weight: 700;
+    font-size: 2rem;
+    color: #ff073a; /* Cyan intense (couleur du survol) */
+    text-shadow: 
+    0 0 10px #ff073a,
+    0 0 20px #ff073a,
+    0 0 30px #ff073a,
+    0 0 40px #ff003c;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    position: relative;
+    display: inline-block;
+}
+
+.navdeco{
+    display: block;
+}
+.navdeco ul {
+    display: flex; /* Aligne les éléments sur une ligne */
+    gap: 50px; /* Ajoute un espace de 20px entre les <li> */
+    list-style: none; /* Supprime les puces */
+
+}
+
+.lideco {
+    display: inline-block;
+    display: flex;
+    justify-content: center;  /* Centrage horizontal */
+    align-items: center;      /* Centrage vertical */
+    text-align: center;
+    background-color: black;
+    height: 15px;
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    border: 2px solid gray;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s, color 0.3s, transform 0.2s;
+}
+
+.lidecomenu1{
+    height: 15px;
+    height: 15%;
+    display: inline-block;
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    color: white;
+    background-color: gray;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+}
+.lidecomenu1:hover {
+    background-color: gray;
+    border-bottom: 3px solid black;
+    padding-bottom: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Ombre légère */
+    transform: scale(1.05);
+}
+.lidecomenu1:active {
+    background-color: gray;
+    border-bottom: 3px solid black;
+    padding-bottom: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Ombre légère */
+    transform: scale(0.98);
+}
