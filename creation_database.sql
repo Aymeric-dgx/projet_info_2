@@ -17,8 +17,8 @@ CREATE TABLE action (
     nom VARCHAR(255) NOT NULL,
     symbole VARCHAR(255) NOT NULL UNIQUE,
     description TEXT NOT NULL,
-    actual_price DECIMAL(10,2) NOT NULL,
-    original_price DECIMAL(10,2) NOT NULL,
+    price DECIMAL(10,2) NOT NULL,    /* Prix actuel */
+    original_price DECIMAL(10,2) NOT NULL,    /* Prix d'origine, à "t=0" */
     id_dividende INT,
     FOREIGN KEY (id_dividende) REFERENCES dividende(id)
  );
