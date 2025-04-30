@@ -1,0 +1,1 @@
+Cela ne fonctionne pas pour notre utilisation, mais je le garde ici afin d'avoir un exmple de service worker si nescessaire pour autre chose.
