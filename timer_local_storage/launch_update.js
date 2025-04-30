@@ -12,6 +12,9 @@ async function tryUpdate() {
             const data = await response.text();
             console.log("Mise à jour réussie :", data);
             localStorage.setItem("lastUpdate", Date.now());
+
+            // Recharger la page après la mise à jour
+            location.reload();
         } catch (error) {
             console.error("Erreur lors de l'appel à update.php :", error);
         }
