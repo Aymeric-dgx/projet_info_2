@@ -1,4 +1,5 @@
-<?php  
+<?php 
+// Fichier php lancé toute les 2 minutes pour mettre à jour les données
 
 session_start();  
 $error_msg = "";  
@@ -12,25 +13,91 @@ try {
 } catch (PDOException $e) {  
     echo "ERREUR : " . $e->getMessage();  
 }  
-// récuperer la date actuel pour les historique
+
+
+
+// Récuperer la date actuel pour les historiques
 $stmt = $bdd->query("SELECT global_date FROM global_date LIMIT 1");
 $resultat = $stmt->fetch(PDO::FETCH_ASSOC);
 $date = $resultat['global_date'];
 
 
-// Maj des actions 
-$action = $bdd->query("SELECT * FROM action");
-$resultat=$action->fetchAll(PDO::FETCH_ASSOC);
-foreach($resultat as $action){
-    $id_action=$action['id'];
-    $price=$action['price'];
-    $req = $bdd->query("INSERT INTO action_history(action_id,date,price_at_this_date) VALUES($id_action,'$date',$price)");
+
+
+// Maj de l'hsitorique des actions (prix + date)
+$stmt = $bdd->query("SELECT id, price FROM action");
+$resultat = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+foreach($resultat as $row) {
+    $id_action = $row['id'];
+    $price = $row['price'];
+    $bdd->query("INSERT INTO action_history (action_id, price_at_this_date, date) VALUES ($id_action, $price, '$date')");
 }
 
-// Date 
+
+
+
+// Maj de l'historique des soldes des joueurs (prix + date)
+$stmt = $bdd->query("SELECT id, solde FROM utilisateur");
+$resultat = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+foreach($resultat as $row) {
+    $id_user = $row['id'];
+    $solde = $row['solde'];
+    $bdd->query("INSERT INTO solde_history (id_user, solde_value, registement_date) VALUES ($id_user, $solde, '$date')");
+}
+
+
+
+
+// Maj de l'historique de la valeur total (solde + somme des actions) des joueurs (prix + date)
+$sql = "SELECT u.id, solde+COALESCE(SUM(price*quantity),0) as total_value 
+        FROM utilisateur u
+        LEFT JOIN global_wallet gw ON u.id = gw.id_user
+        LEFT JOIN action a ON gw.id_action = a.id
+        GROUP BY u.id;";
+
+$stmt = $bdd->query($sql);
+$resultat = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+foreach($resultat as $row) {
+    $id_user = $row['id'];
+    $total_value = $row['total_value'];
+    $bdd->query("INSERT INTO total_value_history (id_user, total_value, registement_date) VALUES ($id_user, $total_value, '$date')");
+}
+
+
+
+
+// Maj du temps
 $req = $bdd->query("UPDATE global_date SET global_date = DATE_ADD(global_date, INTERVAL 1 MONTH)");
 
-// dividende
+
+
+
+// Maj du prix des actions
+$stmt_all_actions = $bdd->query("SELECT * FROM action");
+$all_actions = $stmt_all_actions->fetchAll(PDO::FETCH_ASSOC);
+
+foreach($all_actions as $action) {
+    $id_action = $action['id'];
+    $original_price = $action['original_price'];
+    $actual_price = $action['price'];
+
+    // Vérification que le prix ne dépasse pas +- 10% du prix d'origine, sinon on génère un nouveau prix
+    do {
+        $random_nb = mt_rand(-300, 300) / 100;
+        $new_price = $actual_price * (1 + $random_nb/100);
+    } while ($new_price < $original_price*0.9 || $new_price > $original_price*1.1);
+
+    // Mise à jour du prix de l'action dans la base de données
+    $stmt_update = $bdd->query("UPDATE action SET price=$new_price WHERE id=$id_action");
+}
+
+
+
+
+// Versement des dividendes (si c'est le momenet d'en verser)
 $req = $bdd->query("SELECT g.id_user,pourcentage,date_distribution,price,g.quantity,g.id_action FROM dividende d INNER JOIN action a on a.id_dividende=d.id INNER JOIN global_wallet g on g.id_action=a.id INNER JOIN utilisateur u on u.id=g.id_user;");
 $result= $req->fetchAll(PDO::FETCH_ASSOC);
 
@@ -43,11 +110,8 @@ foreach($result as $divi){
         $user=$divi['id_user'];
         $action=$divi['id_action'];
         $req = $bdd->query("UPDATE utilisateur u SET solde = solde+$prix_dividende_joueur WHERE u.id=$user");
-
-        //                            $req = $bdd->query("UPDATE action SET price = price-$prix_dividende WHERE id_action=$action");
     }
 }
-
 
 
 ?>
