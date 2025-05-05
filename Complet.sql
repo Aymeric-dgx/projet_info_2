@@ -23,3 +23,21 @@ INSERT INTO action (nom, symbole, description, price, original_price, id_dividen
 ('Advanced Micro Devices', 'AMD', 'Fabricant de microprocesseurs et cartes graphiques.', 85.90, 80.40, 3),
 ('Coca-Cola Company', 'KO', 'Fabricant et distributeur de boissons non-alcoolisées.', 55.60, 50.25, 4),
 ('Pfizer Inc.', 'PFE', 'Entreprise pharmaceutique mondiale.', 40.35, 38.80, 5);
+
+/* Dans news*/
+INSERT INTO news (title, text, impacted_action_id) VALUES
+('Apple annonce de nouveaux produits innovants', 'Apple prévoit de lancer une nouvelle gamme de produits technologiques révolutionnaires d''ici la fin du trimestre, ce qui pourrait booster ses ventes.', 16),
+('Microsoft acquiert une startup IA', 'Microsoft a racheté une startup spécialisée en intelligence artificielle pour 2 milliards de dollars, renforçant sa position sur le marché du cloud.', 17),
+('Amazon étend ses services cloud en Europe', 'Amazon Web Services ouvrira trois nouveaux data centers en Europe pour répondre à la demande croissante.', 18),
+('Tesla dépasse les attentes de production', 'Tesla a produit 30% de véhicules électriques en plus que prévu ce trimestre, malgré les pénuries de composants.', 19),
+('Alphabet lance un nouveau moteur de recherche', 'Google teste une version avancée de son moteur de recherche intégrant l''IA générative.', 20),
+('Meta investit dans le métavers', 'Meta annonce un investissement de 10 milliards de dollars supplémentaires dans le développement du métavers.', 21),
+('NVIDIA révèle de nouvelles puces graphiques', 'Les nouvelles cartes graphiques NVIDIA promettent des performances 2x supérieures aux modèles précédents.', 22),
+('Netflix augmente ses tarifs', 'Netflix annonce une augmentation de 15% de ses abonnements pour financer de nouveaux contenus originaux.', 23),
+('PayPal introduit le paiement crypto', 'PayPal permettra désormais d''effectuer des paiements en cryptomonnaies chez ses marchands partenaires.', 24),
+('Adobe révolutionne la création graphique', 'La nouvelle version d''Adobe Photoshop intègre des outils d''IA pour la création automatique d''images.', 25),
+('Intel reprend des parts de marché', 'Intel regagne des parts de marché face à AMD grâce à ses nouveaux processeurs plus performants.', 26),
+('Salesforce prévoit une croissance record', 'Salesforce annonce des prévisions de croissance supérieures aux attentes pour le prochain trimestre.', 27),
+('AMD lance de nouveaux processeurs', 'AMD dévoile sa nouvelle gamme de processeurs avec une efficacité énergétique améliorée de 40%.', 28),
+('Coca-Cola innove avec des boissons santé', 'Coca-Cola lance une nouvelle gamme de boissons à faible teneur en sucre avec des ingrédients naturels.', 29),
+('Pfizer développe un nouveau vaccin', 'Pfizer annonce des essais cliniques prometteurs pour un nouveau vaccin contre les infections respiratoires.', 30);
