@@ -9,7 +9,7 @@ CREATE TABLE global_date (
 CREATE TABLE dividende (
     id INT PRIMARY KEY AUTO_INCREMENT,
     pourcentage FLOAT NOT NULL,
-    date_distribution INT -- val : 1 à 12. On comparera avec SELECT MONTH(...) FROM ... poue savoir si c'est le mois de versement ou non
+    date_distribution DATE-- val : 1 à 12. On comparera avec SELECT MONTH(...) FROM ... poue savoir si c'est le mois de versement ou non
 );
 
 CREATE TABLE action (
