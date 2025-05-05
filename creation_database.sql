@@ -75,18 +75,10 @@ CREATE TABLE follows (
     FOREIGN KEY (id_followed) REFERENCES utilisateur(id)
 );
 
-CREATE TABLE solde_history (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    id_user INT,
-    solde_value INT,
-    registement_date DATE,
-    FOREIGN KEY (id_user) REFERENCES utilisateur(id)
-)
-
 CREATE TABLE total_value_history (
     id INT PRIMARY KEY AUTO_INCREMENT,
     id_user INT,
     total_value INT,
     registement_date DATE,
     FOREIGN KEY (id_user) REFERENCES utilisateur(id)
-)
+);
