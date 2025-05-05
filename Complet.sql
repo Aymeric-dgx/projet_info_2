@@ -1,3 +1,12 @@
+/*Pour mettre dans dividende*/
+INSERT INTO dividende (pourcentage, date_distribution) VALUES
+(2.5, '2025-06-15'),
+(3.0, '2025-07-20'),
+(1.8, '2025-08-10'),
+(4.2, '2025-09-05'),
+(3.5, '2025-10-12');
+
+/*Pour mettre dans action*/
 INSERT INTO action (nom, symbole, description, price, original_price, id_dividende) VALUES
 ('Apple Inc.', 'AAPL', 'Entreprise technologique spécialisée dans les produits électroniques, les logiciels et les services en ligne.', 175.50, 150.00, 2),
 ('Microsoft Corporation', 'MSFT', 'Leader mondial des logiciels, services et solutions technologiques.', 310.20, 280.75, 1),
