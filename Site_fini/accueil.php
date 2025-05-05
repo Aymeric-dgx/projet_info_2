@@ -423,27 +423,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
        (a2.price_at_this_date / a1.price_at_this_date) AS ratio
 FROM action_history a1
 JOIN action_history a2 ON a1.action_id = a2.action_id
-WHERE a1.date = (SELECT date FROM action_history WHERE date >= DATE_SUB(CURDATE(), INTERVAL 12 MONTH) ORDER BY date ASC LIMIT 1)
-  AND a2.date = (SELECT date FROM action_history WHERE date <= CURDATE() ORDER BY date DESC LIMIT 1)
+WHERE a1.date = (
+    SELECT date FROM action_history 
+    WHERE date = DATE_SUB((SELECT MAX(date) FROM action_history), INTERVAL 12 MONTH) 
+    ORDER BY date ASC LIMIT 1
+)
+AND a2.date = (SELECT MAX(date) FROM action_history)
 ORDER BY ratio DESC
 LIMIT 1;
-;
+
 ";
             $stmt1 = $bdd->prepare($query1);
             $stmt1->execute();
 
-            $actionId = $stmt1->fetch(PDO::FETCH_ASSOC)['action_id'];
+            $actionId1 = $stmt1->fetch(PDO::FETCH_ASSOC)['action_id'];
 
-            $query = "SELECT symbole FROM action WHERE id = :actionId";
+            $query = "SELECT symbole FROM action WHERE id = :actionId1";
             $stmt5 = $bdd->prepare($query);
-            $stmt5->bindParam(':actionId', $actionId, PDO::PARAM_INT);
+            $stmt5->bindParam(':actionId1', $actionId1, PDO::PARAM_INT);
             $stmt5->execute();
 
             $action_sym = $stmt5->fetch(PDO::FETCH_ASSOC)['symbole'];
 
-            $query2 = "SELECT * FROM action_history WHERE action_id = :actionId ORDER BY date ASC";
+            $query2 = "SELECT * FROM action_history WHERE action_id = :actionId1 ORDER BY date ASC";
             $stmt2 = $bdd->prepare($query2);
-            $stmt2->bindParam(':actionId', $actionId, PDO::PARAM_INT);
+            $stmt2->bindParam(':actionId1', $actionId1, PDO::PARAM_INT);
             $stmt2->execute();
 
             // Récupération des résultats
@@ -469,28 +473,33 @@ LIMIT 1;
        (a2.price_at_this_date / a1.price_at_this_date) AS ratio
 FROM action_history a1
 JOIN action_history a2 ON a1.action_id = a2.action_id
-WHERE a1.date = (SELECT date FROM action_history WHERE date >= DATE_SUB(CURDATE(), INTERVAL 12 MONTH) ORDER BY date ASC LIMIT 1)
-  AND a2.date = (SELECT date FROM action_history WHERE date <= CURDATE() ORDER BY date DESC LIMIT 1)
+WHERE a1.date = (
+    SELECT date FROM action_history 
+    WHERE date = DATE_SUB((SELECT MAX(date) FROM action_history), INTERVAL 12 MONTH) 
+    ORDER BY date ASC LIMIT 1
+)
+AND a2.date = (SELECT MAX(date) FROM action_history)
 ORDER BY ratio ASC
 LIMIT 1;
+
 ";
             $stmt3 = $bdd->prepare($query3);
             $stmt3->execute();
 
-            $actionId = $stmt3->fetch(PDO::FETCH_ASSOC)['action_id'];
+            $actionId2 = $stmt3->fetch(PDO::FETCH_ASSOC)['action_id'];
 
 
-            $query4 = "SELECT * FROM action_history WHERE action_id = :actionId ORDER BY date ASC";
+            $query4 = "SELECT * FROM action_history WHERE action_id = :actionId2 ORDER BY date ASC";
             $stmt4 = $bdd->prepare($query4);
-            $stmt4->bindParam(':actionId', $actionId, PDO::PARAM_INT);
+            $stmt4->bindParam(':actionId2', $actionId2, PDO::PARAM_INT);
             $stmt4->execute();
 
             // Récupération des résultats
             $results2 = $stmt4->fetchAll(PDO::FETCH_ASSOC);
 
-            $query6 = "SELECT symbole FROM action WHERE id = :actionId";
+            $query6 = "SELECT symbole FROM action WHERE id = :actionId2";
             $stmt6 = $bdd->prepare($query6);
-            $stmt6->bindParam(':actionId', $actionId, PDO::PARAM_INT);
+            $stmt6->bindParam(':actionId2', $actionId2, PDO::PARAM_INT);
             $stmt6->execute();
 
             $action_sym2 = $stmt6->fetch(PDO::FETCH_ASSOC)['symbole'];
