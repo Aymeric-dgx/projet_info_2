@@ -105,7 +105,7 @@ $date_actuel = date('n', strtotime($date));
 foreach($result as $divi){
     $mois_distribution = date('n', strtotime($divi['date_distribution'])); 
     if($mois_distribution ==$date_actuel){
-        $prix_dividende=(1+$divi['pourcentage']/100)*$divi['price'];
+        $prix_dividende=($divi['pourcentage']/100)*$divi['price'];
         $prix_dividende_joueur=$prix_dividende*$divi['quantity'];
         $user=$divi['id_user'];
         $action=$divi['id_action'];
