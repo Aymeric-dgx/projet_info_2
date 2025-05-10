@@ -80,20 +80,19 @@ $stmt_all_actions = $bdd->query("SELECT * FROM action");
 $all_actions = $stmt_all_actions->fetchAll(PDO::FETCH_ASSOC);
 
 foreach($all_actions as $action) {
-    $id_action = $axtion['id'];
+    $id_action = $action['id'];
     $previous_month_variation = $action['previous_month_variation'];
     $actual_price = $action['price'];
 
     do {
         $new_variation = $previous_month_variation + (mt_rand(-300, 300)/100)/100;
         $new_price = $actual_price * (1 + $new_variation);
-    } while($new_price > 1 && $new_variation < 1.1 && $new_variation > 0.9)
+    } while($new_price < 1 || $new_variation > 1.1 || $new_variation < 0.9);
 
     // Mise à jour du prix de l'action dans la base de données + enregistrement du new taux de variation
     $stmt_update = $bdd->query("UPDATE action SET price=$new_price WHERE id=$id_action");
     $stmt_update = $bdd->query("UPDATE action SET previous_month_variation=$new_variation WHERE id=$id_action");
 }
-
 
 
 
