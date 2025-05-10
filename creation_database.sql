@@ -1,8 +1,7 @@
 -- Pour incrémenter les mois à chaque cycle de 2 min : SET current_date = DATE_ADD(current_date, INTERVAL 1 MONTH);
 -- Poir récupérer le mois sous forme de int : SELECT MONTH(date_inscription) FROM ...
 
--- ALTER TABLE action DROP COLUMN original_price;
--- ALTER TABLE action ADD COLUMN previous_month_variation FLOAT;
+-- ALTER TABLE action ADD COLUMN previous_month_variation FLOAT DEFAULT 0;
 
 CREATE TABLE global_date (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -21,6 +20,7 @@ CREATE TABLE action (
     symbole VARCHAR(255) NOT NULL UNIQUE,
     description TEXT NOT NULL,
     price DECIMAL(10,2) NOT NULL,    /* Prix actuel */
+    original_price DECIMAL(10,2) NOT NULL,    /* Prix d'origine, à "t=0" */
     previous_month_variation FLOAT DEFAULT 0,    /* Taux de variation du mois précédent, au format 0.254*/
     id_dividende INT,
     FOREIGN KEY (id_dividende) REFERENCES dividende(id)
