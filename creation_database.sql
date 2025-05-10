@@ -18,7 +18,7 @@ CREATE TABLE action (
     symbole VARCHAR(255) NOT NULL UNIQUE,
     description TEXT NOT NULL,
     price DECIMAL(10,2) NOT NULL,    /* Prix actuel */
-    original_price DECIMAL(10,2) NOT NULL,    /* Prix d'origine, à "t=0" */
+    previous_month_variation FLOAT,    /* Taux de variation du mois précédent, au format 0.254*/
     id_dividende INT,
     FOREIGN KEY (id_dividende) REFERENCES dividende(id)
  );
