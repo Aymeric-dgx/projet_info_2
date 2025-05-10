@@ -80,18 +80,18 @@ $stmt_all_actions = $bdd->query("SELECT * FROM action");
 $all_actions = $stmt_all_actions->fetchAll(PDO::FETCH_ASSOC);
 
 foreach($all_actions as $action) {
-    $id_action = $action['id'];
-    $original_price = $action['original_price'];
+    $id_action = $axtion['id'];
+    $previous_month_variation = $action['previous_month_variation'];
     $actual_price = $action['price'];
 
-    // Vérification que le prix ne dépasse pas +- 10% du prix d'origine, sinon on génère un nouveau prix
     do {
-        $random_nb = mt_rand(-300, 300) / 100;
-        $new_price = $actual_price * (1 + $random_nb/100);
-    } while ($new_price < $original_price*0.9 || $new_price > $original_price*1.1);
+        $new_variation = $previous_month_variation + (mt_rand(-300, 300)/100)/100;
+        $new_price = $actual_price * (1 + $new_variation);
+    } while($new_price > 1 && $new_variation < 1.1 && $new_variation > 0.9)
 
-    // Mise à jour du prix de l'action dans la base de données
+    // Mise à jour du prix de l'action dans la base de données + enregistrement du new taux de variation
     $stmt_update = $bdd->query("UPDATE action SET price=$new_price WHERE id=$id_action");
+    $stmt_update = $bdd->query("UPDATE action SET previous_month_variation=$new_variation WHERE id=$id_action");
 }
 
 
@@ -105,10 +105,10 @@ $date_actuel = date('n', strtotime($date));
 foreach($result as $divi){
     $mois_distribution = date('n', strtotime($divi['date_distribution'])); 
     if($mois_distribution ==$date_actuel){
-        $prix_dividende=($divi['pourcentage']/100)*$divi['price'];
-        $prix_dividende_joueur=$prix_dividende*$divi['quantity'];
-        $user=$divi['id_user'];
-        $action=$divi['id_action'];
+        $prix_dividende = ($divi['pourcentage']/100) * $divi['price'];
+        $prix_dividende_joueur = $prix_dividende * $divi['quantity'];
+        $use = $divi['id_user'];
+        $action = $divi['id_action'];
         $req = $bdd->query("UPDATE utilisateur u SET solde = solde+$prix_dividende_joueur WHERE u.id=$user");
     }
 }
