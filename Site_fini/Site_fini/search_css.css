@@ -1,0 +1,214 @@
+body, html {
+    margin : 0px;
+    padding : 0px;
+    display : flex;
+    flex-direction : column;
+    height : 100vh;
+    background: linear-gradient(45deg, black, gray, white);
+}
+
+a {
+    text-decoration: none;
+}
+
+
+
+
+
+/********************************************************** Style top_box ***********************************************************/
+.top_box {
+    display: flex;
+}
+
+.search_bar {
+    display : flex;
+    align-items: center;
+    width : 30%;
+    height : 60px;
+    margin-top : 15px;
+    padding: 5px;
+    margin-left : 35%;
+    background-color: white;
+    border-radius : 20px;
+}
+
+.search_bar_logo {
+    width : 10%;
+    height : 75%;
+    background-image : url('photo/loupe.png');
+    background-size: cover;
+    background-position: center;
+    margin : 5px;
+}
+
+.search_bar_input {
+    width : 90%;
+    height : 100%;
+    border: none;
+    outline: none;
+    padding-left: 10px;
+    font-size: 25px;
+}
+
+.sorting_button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left : 15px;
+    margin-top: 15px;
+    border-radius: 10px;
+
+}
+
+/**********************************************************Style main (affichage des joueurs)********************************************/
+
+.whole_research_container {
+    margin-top: 2%;
+    overflow-y: auto;
+    overflow-x : hidden;
+    height:500px;;
+    width: 100%;
+}
+
+.player_container {
+    display: flex;
+    justify-content: space-between;
+    background-color: white;
+    margin-top: 10px;
+    padding: 20px;
+    width: 70%;
+    margin-left: 15%;
+    border-radius : 15px;
+    opacity: 0.8;
+}
+
+.player_container h1, .player_container h3 {
+    margin: 0px;
+}
+.player_container h2 {
+    margin-top: 5px;
+}
+
+.social_buttons_container {
+    display: flex;
+}
+
+.social_button {
+    margin-left: 10px;
+    width: 80px;
+    height: 30px;
+    border-radius: 15px;
+}
+
+/************************************************************ Style header de mathéo ********************************************************/
+
+@keyframes ani {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.header_accueil{
+    background-color: black;
+    color: white;
+}
+
+.enssemble{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+.sniper {
+    height: auto;
+    width: 80px;
+    border-radius: 50%;
+    animation: ani 2.5s linear infinite;
+
+    /* Intégration de l'image */
+    background-color: black;
+    background-image: url('photo/logo.png');
+    background-size: cover;
+    background-position: center;
+}
+
+.logo{
+    align-items: center;
+    text-align: center;
+    font-family: 'Rajdhani', 'Arial Narrow', sans-serif;
+    font-weight: 700;
+    font-size: 2rem;
+    color: #ff073a; /* Cyan intense (couleur du survol) */
+    text-shadow:
+            0 0 10px #ff073a,
+            0 0 20px #ff073a,
+            0 0 30px #ff073a,
+            0 0 40px #ff003c;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    position: relative;
+    display: inline-block;
+}
+
+.navdeco{
+    display: block;
+}
+.navdeco ul {
+    display: flex; /* Aligne les éléments sur une ligne */
+    gap: 50px; /* Ajoute un espace de 20px entre les <li> */
+    list-style: none; /* Supprime les puces */
+
+}
+
+.lideco {
+    display: inline-block;
+    display: flex;
+    justify-content: center;  /* Centrage horizontal */
+    align-items: center;      /* Centrage vertical */
+    text-align: center;
+    background-color: black;
+    height: 15px;
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    border: 2px solid gray;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s, color 0.3s, transform 0.2s;
+}
+
+.lidecomenu1{
+    height: 15px;
+    height: 15%;
+    display: inline-block;
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    color: white;
+    background-color: gray;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+}
+.lidecomenu1:hover {
+    background-color: gray;
+    border-bottom: 3px solid black;
+    padding-bottom: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Ombre légère */
+    transform: scale(1.05);
+}
+.lidecomenu1:active {
+    background-color: gray;
+    border-bottom: 3px solid black;
+    padding-bottom: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Ombre légère */
+    transform: scale(0.98);
+}
