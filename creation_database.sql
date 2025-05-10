@@ -1,6 +1,9 @@
 -- Pour incrémenter les mois à chaque cycle de 2 min : SET current_date = DATE_ADD(current_date, INTERVAL 1 MONTH);
 -- Poir récupérer le mois sous forme de int : SELECT MONTH(date_inscription) FROM ...
 
+-- ALTER TABLE action DROP COLUMN original_price;
+-- ALTER TABLE action ADD COLUMN previous_month_variation FLOAT;
+
 CREATE TABLE global_date (
     id INT AUTO_INCREMENT PRIMARY KEY,
     global_date DATE  -- Date globale du jeu, dont on devra incrémenter le mois à chaque "tour"
