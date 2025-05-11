@@ -1,0 +1,336 @@
+/************************************************** Header ************************************************************/
+.header_graph{
+    border-bottom: 3px solid black;
+    background-color: black;
+    color: white;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Ombre légère */
+}
+
+.h1{
+    color:black;
+}
+
+.div_header{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.txt{
+    text-align:center;
+    font-size: 16px;
+    margin: 10px;
+    padding-inline: 50px;
+}
+
+#body_graph{
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    background-size: auto;
+    background-repeat: no-repeat;
+}
+
+.sniper {
+    height: auto;
+    width: 80px;
+    border-radius: 50%;
+    animation: ani 2.5s linear infinite;
+
+    /* Intégration de l'image */
+    background-color: black;
+    background-image: url('http://localhost/bourse/photo/logo.png');
+    background-size: cover;
+    background-position: center;
+}
+
+.logo{
+    align-items: center;
+    text-align: center;
+    font-family: 'Rajdhani', 'Arial Narrow', sans-serif;
+    font-weight: 700;
+    font-size: 2rem;
+    color: #ff073a; /* Cyan intense (couleur du survol) */
+    text-shadow:
+            0 0 10px #ff073a,
+            0 0 20px #ff073a,
+            0 0 30px #ff073a,
+            0 0 40px #ff003c;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    position: relative;
+    display: inline-block;
+}
+
+
+/********************************************* Boutons de navigation **************************************************/
+.navdecomenu{
+    display: block;
+}
+.navdecomenu ul {
+    display: flex;
+    gap: 50px;
+    list-style: none;
+
+}
+.lidecomenu1{
+    height: 15px;
+    height: 15%;
+    display: inline-block;
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    color: white;
+    background-color: gray;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+}
+.lidecomenu1:hover {
+    background-color: gray;
+    border-bottom: 3px solid black;
+    padding-bottom: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Ombre légère */
+    transform: scale(1.05);
+}
+.lidecomenu1:active {
+    background-color: gray;
+    border-bottom: 3px solid black;
+    padding-bottom: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Ombre légère */
+    transform: scale(0.98);
+}
+
+.lidecomenu2{
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+}
+
+
+
+/*********************************************** Animation d’apparition ***********************************************/
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+
+/******************************************************** Body ********************************************************/
+.title {
+    font-size: 36px;
+    font-weight: bold;
+    text-transform: uppercase;
+    background: linear-gradient(135deg, #000000, #434343);
+    color: white;
+    padding: 15px;
+    border-radius: 10px;
+    display: inline-block;
+    letter-spacing: 2px;
+    width: auto;
+    justify-content: center;
+    text-align: center;
+}
+
+.title2{
+    font-size: 28px;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+}
+
+.container {
+    display: flex;
+    animation: fadeIn 0.6s ease-in-out;
+    height: auto;
+    width: 100%;
+    background: linear-gradient(45deg, black, gray, white);
+    justify-content: center;
+    flex-direction: row;
+}
+
+.body_login {
+    padding: 0;
+    margin: 0;
+    background: linear-gradient(45deg, black, gray, white);
+    min-height: 100vh;
+    min-width: 100vh;
+    background-repeat: no-repeat;
+    font-family: 'Roboto', sans-serif;
+    display: flex;
+    gap: 20px;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.gauche {
+    flex: 1;
+    padding: 30px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    animation: fadeIn 1s ease;
+}
+
+.droite{
+    display: flex;
+    flex-direction: column;
+}
+
+.frame{
+    background: linear-gradient(135deg, #000000, #434343);
+    border-radius: 15px;
+    padding: 40px;
+    margin: 2%;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    color: #fff;
+    font-family: 'Arial', sans-serif;
+    overflow: hidden;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+
+
+.f2{
+    max-height: 20%;
+    max-width: 20%;
+}
+
+.dessous {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.info{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+/************************************************** Bouton graphique **************************************************/
+.controls {
+    display: flex;
+    justify-content: center;
+}
+
+
+.control {
+    color: rgba(255, 255, 255, 0.692);
+    padding: 10px 15px;
+    justify-content: space-between;
+    align-items: center;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.397);
+    background: rgba(255, 255, 255, 0.068);
+    overflow: hidden;
+    font-size: 0.9rem;
+    font-weight: 600;
+    gap: 8px;
+    border-radius: 5px;
+    margin: 0 5px;
+    transition: 0.2s;
+    border: 1px solid transparent;
+}
+
+.control:hover {
+    border-color: rgba(255, 255, 255, 0.623);
+    background: linear-gradient(
+            to bottom,
+            rgba(255, 255, 255, 0.144),
+            rgba(255, 255, 255, 0.247),
+            rgba(255, 255, 255, 0.39)
+    );
+    box-shadow: 0 6px rgba(255, 255, 255, 0.623);
+    transform: translateY(-6px);
+}
+
+.control:active {
+    transform: translateY(2px);
+    box-shadow: none;
+}
+
+
+/***************************************************** Footer *********************************************************/
+.footer {
+    background-color: black;
+    color: white;
+    padding: 30px 0;
+    text-align: center;
+    font-family: 'Segoe UI', sans-serif;
+    border-top: 2px solid #444;
+    animation: fadeIn 1s ease-in-out;
+    bottom:0;
+}
+
+.footer-content {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.footer p {
+    margin: 5px 0;
+    font-size: 14px;
+    color: #cccccc;
+}
+
+
+
+/***************************************** Adaptation de la page (responsive) *****************************************/
+@media (max-width: 1200px) {
+    .navdecomenu{
+        flex-direction: column;
+    }
+    .container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .gauche, .droite {
+        width: 80%;
+        padding: 30px;
+        border-right: none;
+    }
+    .logo {
+        font-size: 2.5rem;
+        text-shadow:
+                0 0 10px #0ff,
+                0 0 20px #0ff,
+                0 0 30px #00ffff;
+    }
+
+    canvas{
+        aspect-ratio: 16/9;
+        width: 100%;
+        height: 100%;
+    }
+    frame{
+        width: 100%;
+        height: 5%;
+        padding : 20px;
+    }
+    .f2{
+        padding: 2% ;
+        width: auto;
+    }
+}
+
+
+
